@@ -1,61 +1,75 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <div class="position-sticky pt-3 sidebar-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">
+            <span data-feather="home" class="align-text-bottom"></span>
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="file" class="align-text-bottom"></span>
+            Orders
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="shopping-cart" class="align-text-bottom"></span>
+            Products
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="users" class="align-text-bottom"></span>
+            Customers
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="bar-chart-2" class="align-text-bottom"></span>
+            Reports
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="layers" class="align-text-bottom"></span>
+            Integrations
+          </a>
+        </li>
+      </ul>
 
-<!-- Sidebar -->
-<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-    <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('/') }}">
-            <i class="fas fa-home" style='font-size:20px'></i> หน้าหลัก
+      <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+        <span>Saved reports</span>
+        <a class="link-secondary" href="#" aria-label="Add a new report">
+          <span data-feather="plus-circle" class="align-text-bottom"></span>
         </a>
-    </li>
-
-
-    <li class="nav-item {{ request()->is('*todos') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('/todos') }}">
-            <i class="fas fa-user-clock" style='font-size:20px'></i> Todo List</a>
-    </li>
-
-    {{-- <li class="nav-item {{ request()->is('*enrols/self/views*') ? 'active' : '' }}">
-        <a class="nav-link"
-            href="{{ url('/enrols/self/views/' . getCurrentYear() . '-' . getCurrentMonth() . '-1/' . getCurrentYear() . '-' . getCurrentMonth() . '-' . getLastDay(now()) . '') }}">
-            <i class="fas fa-clipboard-list" style='font-size:20px'></i> รายงานการมาปฏิบัติงาน</a>
-    </li> --}}
-
-    {{-- @if (Auth::user()->emp_type_id == 1)
-        <li class="nav-item {{ request()->is('*employee*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ url('/employee') }}">
-                <i class="fas fa-users" style='font-size:20px'></i> จัดการพนักงาน
-            </a>
+      </h6>
+      <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="file-text" class="align-text-bottom"></span>
+            Current month
+          </a>
         </li>
-
-        <li class="nav-item {{ request()->is('*enrols/create*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ url('/enrols/create') }}">
-                <i class="fas fa-clock" style='font-size:20px'></i> ลงเวลาการปฏิบัติงาน (เจ้าหน้าที่)</a>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="file-text" class="align-text-bottom"></span>
+            Last quarter
+          </a>
         </li>
-    @endif --}}
-
-    {{-- @if (Auth::user()->emp_type_id == 1 || Auth::user()->emp_type_id == 2)
-        <li class="nav-item {{ request()->is('*reports/all*') ? 'active' : '' }}">
-            <a class="nav-link"
-                href="{{ url('/reports/all/' . getCurrentYear() . '-' . getCurrentMonth() . '-1/' . getCurrentYear() . '-' . getCurrentMonth() . '-' . getLastDay(now()) . '') }}">
-                <i class="fas fa-bars" style='font-size:20px'></i>รายงานการมาปฏิบัติงานพนักงานทั้งหมด</a>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="file-text" class="align-text-bottom"></span>
+            Social engagement
+          </a>
         </li>
-    @endif --}}
-
-
-    <li class="nav-item {{ request()->is('*calendar*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('/calendar') }}">
-            <i class="fas fa-calendar" style='font-size:20px'></i> ปฏิทิน
-        </a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span data-feather="file-text" class="align-text-bottom"></span>
+            Year-end sale
+          </a>
+        </li>
+      </ul>
     </div>
-
-</ul>
-<!-- End of Sidebar -->
+  </nav>

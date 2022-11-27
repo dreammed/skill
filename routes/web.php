@@ -21,7 +21,6 @@ Route::get('/', function () {
 // Route::get('/home', function () {
 //     return view('home');
 // });
-Route::get('/home', [UserController::class, "home"])->name('home');
 Route::get('/login', function () {
     return view('login');
 });
@@ -30,12 +29,17 @@ Route::get('/test', function () {
 });
 Route::post('/login', [UserController::class, "login"])->name('login');
 Route::get('/logout', [UserController::class, "logout"])->name('logout');
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [UserController::class, "home"])->name('home');
+    Route::get('/todos', [TodoController::class, "index"])->name('todo.index');
+    Route::get('/todos/create', [TodoController::class, "create"])->name('todo.create');
+    Route::get('/todos/{id}/get', [TodoController::class, "show"])->name('todo.show');
+    Route::get('/todos/{id}/edit', [TodoController::class, "edit"])->name('todo.edit');
+    Route::get('/todos/{id}/delete', [TodoController::class, "destroy"])->name('todo.delete');
+    Route::patch('/todos/{id}', [TodoController::class, "update"])->name('todo.update');
+    Route::post('/todos', [TodoController::class, "store"])->name('todo.store');
 
-Route::get('/todos', [TodoController::class, "index"])->name('todo.index');
-Route::get('/todos/create', [TodoController::class, "create"])->name('todo.create');
-Route::get('/todos/{id}/get', [TodoController::class, "show"])->name('todo.show');
-Route::get('/todos/{id}/edit', [TodoController::class, "edit"])->name('todo.edit');
-Route::get('/todos/{id}/delete', [TodoController::class, "destroy"])->name('todo.delete');
-Route::patch('/todos/{id}', [TodoController::class, "update"])->name('todo.update');
-Route::post('/todos', [TodoController::class, "store"])->name('todo.store');
+    Route::get('/me/{id}', [UserController::class, "me"])->name('user.me');
+    Route::patch('/users/{id}/edit', [UserController::class, "edit"])->name('user.edit');
+});
 

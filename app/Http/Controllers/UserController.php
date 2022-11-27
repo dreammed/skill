@@ -7,18 +7,20 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Requests;
+
 class UserController extends Controller
 {
-    public function login(Request $request){
+    public function login(Request $request)
+    {
 
         $res = Http::asForm()->post('https://c1app.pea.co.th/idm-login/api_login.php', [
             'username' => $request->username,
             'password' => $request->password,
         ])->throw()->json();
-        // $user = User::where('emp_id', )->first();
+
         $res = (object)$res;
-        $user= null;
-        if($res){
+        $user = null;
+        if (!$res->error) {
             $user = user::updateOrCreate(
                 ['emp_id' => $request->username,],
                 [
@@ -28,36 +30,35 @@ class UserController extends Controller
                 ]
             );
 
-            if (Auth::attempt(['emp_id' => $request->username, 'password' => $request->password]))
-            {
+            if (Auth::attempt(['emp_id' => $request->username, 'password' => $request->password])) {
                 $request->session()->regenerate();
                 session(['user' => $res]);
                 session(['emp_id' => $user->emp_id]);
                 return redirect()->intended('home');
-            } else {
-                return redirect()->back()->withErrors("รหัสพนักงาน หรือ รหัสผ่าน ไม่ถูกต้อง");
             }
-
-        }else{
-            return redirect()->back()->withErrors("ไม่สามารถติดต่อกับ IDM ได้");
+        } else {
+            return redirect()->back()->withErrors($res->message);
         }
     }
 
-    public function home(Request $request){
-        // $me = session('user');
+    public function home()
+    {
         $user = Auth::user();
-        // $user = User::where('emp_id', $me->emp_id)->first();
-
-        // $value = $request->session()->get('userData',"defalut");
-        // $value = $request->session()->pull('userData');
-        return view('home',compact('user'));
-        // return $request->session()->all();
+        return view('home',compact('user' ));
     }
 
-    public function logout(Request $request){
+
+    public function me($id)
+    {
+        $user = User::findOrFail($id);
+        return view('user.edit',compact('user' ));
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return view('test');
+        return redirect('/');
     }
-
 }

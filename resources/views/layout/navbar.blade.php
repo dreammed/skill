@@ -1,62 +1,89 @@
 <!-- Topbar -->
-<nav class="navbar navbar-expand text-white navbar-light topbar static-top shadow" style="background-color: 865FDE;">
+@php
+    $user = Auth::user();
+@endphp
 
-    <!-- Sidebar Toggle (Topbar) -->
-    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-        <i class="fa fa-bars"></i>
+<div class="container-fluid">
+    <a class="navbar-brand" href="#">C1 SKILL CHALLENGER</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
     </button>
-    <div>
-        <h5>การไฟฟ่าส่วนภูมิภาค เขต.1 ภาคกลาง จ.พระนครศรีอยุธยา</h5>
-    </div>
-
-    {{-- @auth --}}
-        @php
-            // $user = Session::get('user');
-            // $user = json_encode($user);
-            // $user = json_decode($user);
-            $user = Auth::user();
-            // $sdata = Session::all();
-        @endphp
-    {{-- @endauth --}}
-     {{-- {{$sdata}} --}}
-    <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
-        <div class="topbar-divider d-none d-sm-block"></div>
-
-        <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline">
-                    {{-- {{$user}} --}}
-                    @isset($user)
-                        {{ $user->emp_id }} {{ $user->name }} <br>
-                        {{ $user->NewOrganizationalCode }}<br>
-                    @endisset
-                    {{-- กองบริการลูกค้า (ก.1กบล.) --}}
-                </span>
-                <i class="fas fa-user fa-lg fa-fw mr-2"></i>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+                <a href="{{url('/home')}}" class="nav-link {{ Request::is('home') ? 'active' : '' }}" >Home</a>
+            </li>
+            <li class="nav-item ">
+                <a href="{{route('todo.index')}}" class="nav-link {{ Request::is('todos') ? 'active' : '' }}" >Todo</a>
+            </li>
+        </ul>
+        <div class="dropdown">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
+                    class="rounded-circle">
             </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a href="{{ url('/employee/' . $user->emp_id . '/edit') }}" class="dropdown-item">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    ข้อมูลบุลคล
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    ออกจากระบบ
-                </a>
-            </div>
-        </li>
+            <ul class="dropdown-menu text-small">
+                <li>
+                    <a href="{{ url('/me/' . $user->id) }}" class="dropdown-item">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        ข้อมูลบุลคล
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#logoutModal">ออกจากระบบ</a></li>
+            </ul>
+        </div>
+        <span class="me-2 text-light">
+            @isset($user)
+                {{ $user->emp_id }} {{ $user->name }} <br>
+                {{ $user->NewOrganizationalCode }}<br>
+            @endisset
+        </span>
+    </div>
+</div>
 
-    </ul>
-
-</nav>
 <!-- End of Topbar -->
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="logoutModalLabel">ออกจากระบบ</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            ต้องการออกจากระบบใช่หรือไม่
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">ยกเลิก</button>
+          <a href="{{ url('/logout') }}" class="btn btn-primary">ออกจากระบบ</a>
+        </div>
+      </div>
+    </div>
+</div>
+{{-- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -66,11 +93,10 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            {{-- <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div> --}}
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">ยกเลิก</button>
                 <a href="{{ url('/logout') }}" class="btn btn-primary">ออกจากระบบ</a>
             </div>
         </div>
     </div>
-</div>
+</div> --}}

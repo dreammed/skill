@@ -1,101 +1,141 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.104.2">
+    <title>Signin</title>
 
-    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
 
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+        }
+
+        .form-signin .form-floating:focus-within {
+            z-index: 2;
+        }
+
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    </style>
 
 </head>
 
-<!--<body style="background:#7d3587"> -->
+<body class="text-center">
 
-<body style="background-image: linear-gradient(to top,#7d3587,#966aaa,#b39cca,#d5cde6);">
-    <div class="container">
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
+    <main class="form-signin w-100 m-auto">
+        <form method="POST" action="{{ url('/login') }}">
+            @csrf
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-            <div class="col-sm-6 col-md-6">
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">กรุณาลงชื่อเพื่อเข้าใช้งาน</h1>
-                                    </div>
-                                    <form method="POST" action="{{ url('/login') }}">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="username"
-                                                name="username" placeholder="รหัสพนักงาน" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                name="password" id="password" placeholder="รหัสผ่าน" required>
-                                        </div>
-                                        <div class="form-group">
-                                            {{-- <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" name="remember" id="remember" >
-                                                <label class="custom-control-label" for="remember">Remember Me</label>
-                                            </div> --}}
-                                        </div>
-                                        <div class="form-group">
-                                            <input class="btn btn-primary btn-user btn-block" type="submit"
-                                                value="เข้าสู่ระบบ">
-                                        </div>
-                                    </form>
-                                    <hr>
-                                    @if (count($errors) > 0)
-                                        @foreach ($errors->all() as $message)
-                                            <div class="alert alert-danger display-hide">
-                                                <button class="close" data-close="alert"></button>
-                                                <span>{{ $message }}</span>
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                    {{-- <div class="text-center">
-                                        <a class="small" href="{{ url('/login') }}">login</a>
-                                    </div> --}}
-                                    {{-- <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div> --}}
-                                    {{-- <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatingInput" id="username" name="username" placeholder="ระบุรหัสพนักงาน">
+                <label for="username">รหัสพนักงาน</label>
             </div>
-        </div>
-    </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                <label for="password">รหัสผ่าน</label>
+            </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">เข้าสู่ระบบ</button>
+            <p class="mt-5 mb-3 text-muted">&copy; C1 2022</p>
+        </form>
+        <hr>
+        @if (count($errors) > 0)
+            @foreach ($errors->all() as $message)
+                <div class="alert alert-danger display-hide">
+                    <span>{{ $message }}</span>
+                </div>
+            @endforeach
+        @endif
+    </main>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
 
 </body>
 
