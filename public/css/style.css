@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+@page {
+    size: auto;
+}
+body {
+    font-family: 'Sarabun', sans-serif;      
+}
+a:link { text-decoration: none; }
+table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
