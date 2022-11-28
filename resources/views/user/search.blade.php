@@ -46,6 +46,15 @@
                 </div>               
             </div>
 
+
+            <div class="form-group">
+                <input type="file" name="file" required>
+            </div>
+            @error('file')
+            <div class="alert alert-danger">{{$message}}</div>                      
+           @enderror
+
+
             <div class="col-md-12">
                 <button type="submit" class="btn btn-primary mt-3">ค้นหา</button>
             
