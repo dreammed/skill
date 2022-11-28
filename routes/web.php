@@ -45,7 +45,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/me/{id}', [UserController::class, "me"])->name('user.me');
     Route::patch('/users/{id}/edit', [UserController::class, "edit"])->name('user.edit');
 });
-Route::get('/test', function () {
-    return view('test');
-});
 
