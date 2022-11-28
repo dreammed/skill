@@ -10,7 +10,7 @@ use App\Http\Requests;
 
 class UserController extends Controller
 {
-    public function login(Request $request)
+    public function login2(Request $request)
     {
 
         $res = Http::asForm()->post('https://c1app.pea.co.th/idm-login/api_login.php', [
@@ -41,17 +41,50 @@ class UserController extends Controller
         }
     }
 
+    public function login(Request $request)
+    {
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            $request->session()->regenerate();
+            return redirect()->intended('home');
+        } else {
+            return redirect()->back()->withErrors("ชื่อผู้ใช้หรือรหัสผ่านผิดพลาด");
+        }
+    }
+
     public function home()
     {
         $user = Auth::user();
-        return view('home',compact('user' ));
+        return view('home', compact('user'));
     }
 
+    public function create()
+    {
+        return view('user.create');
+    }
+
+    public function store(Request $request)
+    {
+        $path = $request->pic ;
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        User::create([
+            'name' => $request->name,
+            'tel' => $request->tel,
+            'pic' => $request->pic,
+            'lang_id' => $request->lang_id,
+            'private' => $request->private,
+            'username' => $request->username,
+            'password' => $request->password
+        ]);
+        return redirect('home');
+    }
 
     public function me($id)
     {
         $user = User::findOrFail($id);
-        return view('user.edit',compact('user' ));
+        return view('user.edit', compact('user'));
     }
 
     public function logout(Request $request)
