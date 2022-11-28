@@ -53,13 +53,13 @@
         
         </div>
         </form>
-
+        
 
         <div class="col-12">
 
             @if ($message = Session::get('success'))
             <div class="alert alert-success mt-3" > {{$message}} </div>
-            
+          
                 <div>
                     <table class="table table-bordered mt-5">
                         <tr>
@@ -75,6 +75,9 @@
                                 เบอร์โทรศัพท์.
                             </th>
                         </tr>
+
+
+                     
                       
                     </table>
            

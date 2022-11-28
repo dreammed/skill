@@ -12,7 +12,8 @@ class SkillController extends Controller
     {
       //  $data['companies'] = Company::orderby('id', 'desc')->paginate(5);
       //  return view('companies.index', $data);
-      return view('user.search') ;
+      $data['Users'] = User::where('name', '=', '')->orwhere('lang_id', '=', 1) ;
+      return view('user.search' , $data) ;
     }
 
     public function search(Request $request)
@@ -20,16 +21,21 @@ class SkillController extends Controller
      
         $request->validate(
             [
-                'name' => 'required'
-                
+                'name' => 
+                [
+                    'required',
+                    'min:8',
+                    'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/'
+                   
+                ]
+
+           
             ]
         );
-
-
-        $data['Users'] = User::orderby('id', 'desc') ;
-        
-    
+       // $data['Users'] = User::where('name', '=', $request->name)->orwhere('lang_id', '=', 1) ;
         return redirect()->route('skill.index')->with('success', 'ค้นหาสำเร็จ');
+
+      
     }
 
 
