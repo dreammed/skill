@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\File;
+
 class SkillController extends Controller
 {
 
@@ -19,9 +22,11 @@ class SkillController extends Controller
     public function search(Request $request)
     {
      
-        $request->validate(
+         $request->validate(
             [
-                'name' => 
+             
+                /*
+               'name' => 
                 [
                     'required',
                     'min:8',
@@ -29,9 +34,31 @@ class SkillController extends Controller
                    
                 ]
 
+                */
+                
+
+                
+
            
             ]
-        );
+             );
+
+            if ($request->hasFile('file')) {
+
+                $request->validate([
+                    'file' => 'required|mimes:png|max:200' // Only allow .jpg, .bmp and .png file types.
+                ]);
+
+
+                $file = $request->file('file');
+                $request->file->store('pic', 'public');
+
+                $name = $file->hashName();
+ 
+                $upload = Storage::put("avatars/{$name}", $file);
+
+            }
+       
        // $data['Users'] = User::where('name', '=', $request->name)->orwhere('lang_id', '=', 1) ;
         return redirect()->route('skill.index')->with('success', 'ค้นหาสำเร็จ');
 
