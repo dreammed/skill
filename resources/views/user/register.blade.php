@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 
@@ -7,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.104.2">
-    <title>Signin</title>
+    <title>Register</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -103,30 +104,18 @@
 
 <body class="text-center">
 
-    <main class="form-signin w-100 m-auto">
-        <form method="POST" action="{{ url('/login') }}">
+    <main class=" w-100 m-auto">
+        <h1 class="h3 mb-2 text-gray-800">ลงทะเบียน </h1>
+        <form method="POST" action="{{ url('/register') }}" enctype="multipart/form-data" style="width:50%">
             @csrf
-            <h1 class="h3 mb-3 fw-normal">กรุณาลงชื่อเพื่อเข้าสู่ระบบ</h1>
-
-            <div class="form-floating">
-                <input type="text" class="form-control" id="floatingInput" id="username" name="username" placeholder="ระบุรหัสพนักงาน">
-                <label for="username">รหัสพนักงาน</label>
+            @method('POST')
+            @include ('user.regform')
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="ลงทะเบียน">
             </div>
-            <div class="form-floating">
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-                <label for="password">รหัสผ่าน</label>
-            </div>
-
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me"> จดจำผู้ใช้งาน
-                </label>
-            </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">เข้าสู่ระบบ</button>
-            <p class="mt-5 mb-3 text-muted">&copy; C1 2022</p>
         </form>
         <div class="mt-2 mb-2">
-            <a href="{{ url('/register') }}" class="btn btn-primary">ลงทะเบียน</a>
+            <a href="{{ url('/login') }}" class="btn btn-secondary">ย้อนกลับ</a>
         </div>
         <hr>
         @if (count($errors) > 0)

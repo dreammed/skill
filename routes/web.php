@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\SkillController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TodoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +15,8 @@ use App\Http\Controllers\TodoController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::resource('skill',SkillController::class);
+Route::post('/search', [SkillController::class, "search"])->name('skill.search');
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -24,6 +28,11 @@ use App\Http\Controllers\TodoController;
 Route::get('/login', function () {
     return view('login');
 });
+Route::get('/register', function () {
+    return view('user.register');
+});
+Route::post('/register', [UserController::class, "store"])->name('user.store');
+
 Route::post('/login', [UserController::class, "login"])->name('login');
 Route::get('/logout', [UserController::class, "logout"])->name('logout');
 Route::middleware('auth')->group(function () {
@@ -39,8 +48,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/me/{id}', [UserController::class, "me"])->name('user.me');
     Route::patch('/users/{id}/edit', [UserController::class, "edit"])->name('user.edit');
-});
-Route::get('/test', function () {
-    return view('test');
+
+
+
+
 });
 
