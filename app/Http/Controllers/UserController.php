@@ -43,23 +43,36 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $path = $request->pic ;
+        $path = $request->file('pic');
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
-        $base64 = 'data:image/' . 'png' . ';base64,' . base64_encode($request->pic);
+        $base64 = 'data:image/' .$type . ';base64,' . base64_encode($data);
 
-        $private =$request->private;
-        if( $private == 'on'){
+
+        $request->validate(
+            [
+                'password' =>
+                [
+                    'required',
+                    'min:8',
+                    'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/'
+                ]
+            ]
+        );
+
+
+        $private = $request->private;
+        if ($private == 'on') {
             $private = 1;
-        }else{
+        } else {
             $private = 0;
         }
         User::create([
             'name' => $request->name,
             'tel' => $request->tel,
-            'pic' => '' ,
+            'pic' => $base64,
             'lang_id' => $request->lang_id,
-            'private' => $private ,
+            'private' => $private,
             'username' => $request->username,
             'password' => $request->password
         ]);
@@ -94,7 +107,7 @@ class UserController extends Controller
 
     public function checkTooManyFailedAttempts()
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 3)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 3)) {
             return;
         }
         RateLimiter::hit($this->throttleKey(), 180);

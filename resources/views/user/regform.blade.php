@@ -1,13 +1,11 @@
 <div class="form-floating">
     <input type="text" class="form-control" id="name" name="name" placeholder="ระบุชื่อ - สกุล"
-    value="{{ isset($user->name) ? $user->name : '' }}"
-    required>
+        value="{{ isset($user->name) ? $user->name : '' }}" required>
     <label for="name">ชื่อ - สกุล </label>
 </div>
 <div class="form-floating">
     <input type="text" class="form-control" id="tel" name="tel" placeholder="ระบุโทรศัพท์"
-    value="{{ isset($user->tel) ? $user->tel : '' }}"
-    required>
+        value="{{ isset($user->tel) ? $user->tel : '' }}" required>
     <label for="tel">โทรศัพท์</label>
 </div>
 <div>
@@ -17,7 +15,7 @@
     </div>
     <div class="">
         <input class="form-check-input" type="checkbox" id="private" name="private"
-        {{ isset($user->private) ? 'checked="checked"': ''}}>
+            {{ isset($user->private) ? 'checked="checked"' : '' }}>
         <label for="private">เปิดเผยข้อมูล</label>
     </div>
 </div>
@@ -40,8 +38,7 @@
 </div>
 <div class="form-floating">
     <input type="text" class="form-control" id="username" name="username" placeholder="ระบุรหัสพนักงาน"
-    value="{{ isset($user->username) ? $user->username : '' }}"
-    required>
+        value="{{ isset($user->username) ? $user->username : '' }}" required>
     <label for="username">รหัสพนักงาน</label>
 </div>
 {{-- @isset(!$user) --}}
@@ -51,10 +48,11 @@
 </div>
 {{-- @endisset --}}
 
-
 <div class="form-floating">
     <input type="password" class="form-control" name="password" id="password" placeholder="Password"
-    value="{{ isset($user->passowrd) ? $user->passoword : '' }}"
-    required>
+        value="{{ isset($user->passowrd) ? $user->passoword : '' }}" required>
     <label for="password">ยืนยันรหัสผ่าน</label>
+    @error('password')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
 </div>
