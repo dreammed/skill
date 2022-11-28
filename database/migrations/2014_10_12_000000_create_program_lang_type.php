@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('todos', function (Blueprint $table) {
+        Schema::create('program_lang_type', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
-            $table->string('user_id');
-            // $table->unsignedBigInteger('user_id');
-            // $table->foreign('user_id')->references('id')->on('users');
+            $table->string('lang');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('todos');
+        Schema::dropIfExists('program_lang_type');
     }
 };

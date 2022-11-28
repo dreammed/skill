@@ -24,6 +24,11 @@ use App\Http\Controllers\TodoController;
 Route::get('/login', function () {
     return view('login');
 });
+Route::get('/register', function () {
+    return view('user.register');
+});
+Route::post('/register', [UserController::class, "store"])->name('user.store');
+
 Route::post('/login', [UserController::class, "login"])->name('login');
 Route::get('/logout', [UserController::class, "logout"])->name('logout');
 Route::middleware('auth')->group(function () {
