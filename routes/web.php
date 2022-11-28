@@ -14,9 +14,9 @@ use App\Http\Controllers\TodoController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Route::get('/home', function () {
 //     return view('home');
@@ -24,12 +24,10 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('login');
 });
-Route::get('/test', function () {
-    return view('test');
-});
 Route::post('/login', [UserController::class, "login"])->name('login');
 Route::get('/logout', [UserController::class, "logout"])->name('logout');
 Route::middleware('auth')->group(function () {
+    Route::get('/', [UserController::class, "home"])->name('home');
     Route::get('/home', [UserController::class, "home"])->name('home');
     Route::get('/todos', [TodoController::class, "index"])->name('todo.index');
     Route::get('/todos/create', [TodoController::class, "create"])->name('todo.create');
@@ -42,4 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/me/{id}', [UserController::class, "me"])->name('user.me');
     Route::patch('/users/{id}/edit', [UserController::class, "edit"])->name('user.edit');
 });
-
+Route::get('/test', function () {
+    return view('test');
+});
+Route::get('/skill', function () {
+    return view('search');
+});
