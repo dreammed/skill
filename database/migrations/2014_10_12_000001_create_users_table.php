@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('name');
             $table->string('tel')->unique();
-            $table->string('pic');
+            $table->text('pic');
             $table->unsignedBigInteger('lang_id');
             $table->foreign('lang_id')->references('id')->on('program_lang_type');
             $table->boolean('private')->nullable();;

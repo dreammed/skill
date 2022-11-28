@@ -33,7 +33,7 @@ Route::post('/login', [UserController::class, "login"])->name('login');
 Route::get('/logout', [UserController::class, "logout"])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::get('/', [UserController::class, "home"])->name('home');
-    Route::get('/home', [UserController::class, "home"])->name('home');
+    Route::get('/home', [UserController::class, "index"])->name('home');
     Route::get('/todos', [TodoController::class, "index"])->name('todo.index');
     Route::get('/todos/create', [TodoController::class, "create"])->name('todo.create');
     Route::get('/todos/{id}/get', [TodoController::class, "show"])->name('todo.show');
@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/todos', [TodoController::class, "store"])->name('todo.store');
 
     Route::get('/me/{id}', [UserController::class, "me"])->name('user.me');
-    Route::patch('/users/{id}/edit', [UserController::class, "edit"])->name('user.edit');
+    Route::get('/users', [UserController::class, "index"])->name('user.index');
+    Route::patch('/users/{id}/edit', [UserController::class, "update"])->name('user.edit');
 });
 

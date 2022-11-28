@@ -3,46 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use App\Models\User;
 use App\Http\Requests;
 
 class UserController extends Controller
 {
-    public function login2(Request $request)
+    public function index()
     {
-
-        $res = Http::asForm()->post('https://c1app.pea.co.th/idm-login/api_login.php', [
-            'username' => $request->username,
-            'password' => $request->password,
-        ])->throw()->json();
-
-        $res = (object)$res;
-        $user = null;
-        if (!$res->error) {
-            $user = user::updateOrCreate(
-                ['emp_id' => $request->username,],
-                [
-                    'emp_id' => $request->username,
-                    'password' => $request->password,
-                    'name' =>  $res->fullname,
-                ]
-            );
-
-            if (Auth::attempt(['emp_id' => $request->username, 'password' => $request->password])) {
-                $request->session()->regenerate();
-                session(['user' => $res]);
-                session(['emp_id' => $user->emp_id]);
-                return redirect()->intended('home');
-            }
-        } else {
-            return redirect()->back()->withErrors($res->message);
-        }
+        $user = User::join('program_lang_type', 'users.lang_id', '=', 'program_lang_type.id')->get();
+        return view('user.view', compact('user'));
     }
 
     public function login(Request $request)
     {
+        $this->checkTooManyFailedAttempts();
+
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             $request->session()->regenerate();
             return redirect()->intended('home');
@@ -67,20 +46,33 @@ class UserController extends Controller
         $path = $request->pic ;
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        $base64 = 'data:image/' . 'png' . ';base64,' . base64_encode($request->pic);
 
+        $private =$request->private;
+        if( $private == 'on'){
+            $private = 1;
+        }else{
+            $private = 0;
+        }
         User::create([
             'name' => $request->name,
             'tel' => $request->tel,
-            'pic' => $request->pic,
+            'pic' => '' ,
             'lang_id' => $request->lang_id,
-            'private' => $request->private,
+            'private' => $private ,
             'username' => $request->username,
             'password' => $request->password
         ]);
         return redirect('home');
     }
 
+    public function update(Request $request, $id)
+    {
+        $requestData = $request->all();
+        $user = User::findOrFail($id);
+        $user->update($requestData);
+        return redirect('home');
+    }
     public function me($id)
     {
         $user = User::findOrFail($id);
@@ -93,5 +85,19 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
+    }
+
+    public function throttleKey()
+    {
+        return Str::lower(request('username')) . '|' . request()->ip();
+    }
+
+    public function checkTooManyFailedAttempts()
+    {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 3)) {
+            return;
+        }
+        RateLimiter::hit($this->throttleKey(), 180);
+        return redirect()->back()->withErrors("ผู้ใช้งานล็อคอินมากกว่า 3 ครั้ง");
     }
 }

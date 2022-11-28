@@ -15,13 +15,15 @@
                 <a href="{{url('/home')}}" class="nav-link {{ Request::is('home') ? 'active' : '' }}" >Home</a>
             </li>
             <li class="nav-item ">
-                <a href="{{route('todo.index')}}" class="nav-link {{ Request::is('todos') ? 'active' : '' }}" >Todo</a>
+                <a href="{{route('user.index')}}" class="nav-link {{ Request::is('users') ? 'active' : '' }}" >ค้นหาข้อมูล</a>
             </li>
         </ul>
         <div class="dropdown">
             <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
+                {{-- <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
+                    class="rounded-circle"> --}}
+                    <img src="{{$user->pic}}" alt="mdo" width="32" height="32"
                     class="rounded-circle">
             </a>
             <ul class="dropdown-menu text-small">
@@ -38,7 +40,7 @@
             </ul>
         </div>
         <span class="me-2 text-light">
-            @isset($user)       
+            @isset($user)
                 <p>{{ $user->emp_id }} {{ $user->name }}</p>
                 ตำแหน่ง
             @endisset
