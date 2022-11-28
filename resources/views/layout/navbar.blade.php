@@ -38,9 +38,9 @@
             </ul>
         </div>
         <span class="me-2 text-light">
-            @isset($user)
-                {{ $user->emp_id }} {{ $user->name }} <br>
-                {{ $user->NewOrganizationalCode }}<br>
+            @isset($user)       
+                <p>{{ $user->emp_id }} {{ $user->name }}</p>
+                ตำแหน่ง
             @endisset
         </span>
     </div>
@@ -49,23 +49,7 @@
 <!-- End of Topbar -->
 <!-- Logout Modal-->
 <!-- Modal -->
-<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
 <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -83,20 +67,3 @@
       </div>
     </div>
 </div>
-{{-- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="logoutModalLabel">ต้องการออกจากระบบใช่หรือไม่</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">ยกเลิก</button>
-                <a href="{{ url('/logout') }}" class="btn btn-primary">ออกจากระบบ</a>
-            </div>
-        </div>
-    </div>
-</div> --}}

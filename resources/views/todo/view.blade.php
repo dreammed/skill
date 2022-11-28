@@ -19,7 +19,7 @@
                 <td>{{ $item->description }}</td>
                 <td>{{ $item->user_id }}</td>
                 <td>
-                    <a href="{{ url('/todos/' . $item->id. '/get') }}" class="btn btn-sm btn-primary">ดูข้อมูล</a>
+                    <a href="{{ url('/todos/' . $item->id . '/get') }}" class="btn btn-sm btn-primary">ดูข้อมูล</a>
                     <a href="{{ url('/todos/' . $item->id . '/edit') }}" class="btn btn-sm btn-warning">แก้ไข</a>
                     <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal-{{ $item->id }}"
                         data-id="{{ $item->id }}">ลบ</a>
@@ -40,13 +40,27 @@
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">ต้องการลบข้อมูล <b> {{ $item->id.' '.$item->emp_name }} </b>ใช่หรือไม่ </div>
+                    <div class="modal-body">ต้องการลบข้อมูล <b> {{ $item->id . ' ' . $item->emp_name }} </b>ใช่หรือไม่
+                    </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">ยกเลิก</button>
-                        <a href="{{ url('/todos/'.$item->id. '/delete') }}" class="btn btn-primary">ตกลง</a>
+                        <a href="{{ url('/todos/' . $item->id . '/delete') }}" class="btn btn-primary">ตกลง</a>
                     </div>
                 </div>
             </div>
         </div>
     @endforeach
+
 @endsection
+@push('other-scripts')
+    {{-- <script src="{{ asset('js/todo.js') }}">
+</script> --}}
+@endpush
+@section('scripts')
+    <script>
+        const test = "plug"
+        $(function() {
+            console.log(`hello ${test} jquery`);
+        });
+    </script>
+@stop

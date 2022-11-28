@@ -16,6 +16,7 @@
     </main>
 
     @include('layout.js')
+    @yield('scripts');
 </body>
 
 </html>
