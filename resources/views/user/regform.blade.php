@@ -10,13 +10,17 @@
 </div>
 <div>
     <div class="form-floating">
-        <input type="file" class="form-control" id="pic" name="pic" placeholder="กรุณาเลือกรูป" required>
+        <input type="file" class="form-control" id="pic" name="pic" placeholder="กรุณาเลือกรูป"
+        value="{{ isset($user->pic) ? '' :  'required="required"' }}"
+        >
+        <input type="text" style="display:none" id="oldpic" name="oldpic" value="{{ isset($user->pic) ? $user->pic : '' }}">
         <label for="pic">pic</label>
     </div>
+
     <div class="">
-        <input class="form-check-input" type="checkbox" id="private" name="private"
-            {{ isset($user->private) ? 'checked="checked"' : '' }}>
-        <label for="private">เปิดเผยข้อมูล</label>
+        <input class="form-check-input" type="checkbox" id="private" name="private" onclick="$(this).val(this.checked ? 1 : 0)"
+        value="{{ isset($user->private) ? $user->private : '' }}" {{ isset($user->private) ? 'checked="checked"' : '' }}">
+        <label for="private">ไม่เปิดเผยข้อมูล</label>
     </div>
 </div>
 <div class="form-group col-lg-6">
@@ -43,16 +47,26 @@
 </div>
 {{-- @isset(!$user) --}}
 <div class="form-floating">
-    <input type="password" class="form-control" name="basepassword" id="basepassword" placeholder="ระบุรหัสผ่าน">
+    <input type="password" class="form-control" name="basepassword" id="basepassword"
+    value="{{ isset($user->password) ? $user->password : '' }}"
+    placeholder="ระบุรหัสผ่าน">
     <label for="basepassword">รหัสผ่าน</label>
 </div>
 {{-- @endisset --}}
 
 <div class="form-floating">
     <input type="password" class="form-control" name="password" id="password" placeholder="Password"
-        value="{{ isset($user->passowrd) ? $user->passoword : '' }}" required>
+        value="{{ isset($user->password) ? $user->password : '' }}" required>
     <label for="password">ยืนยันรหัสผ่าน</label>
     @error('password')
         <div class="alert alert-danger">{{ $message }}</div>
     @enderror
 </div>
+
+@section('scripts')
+    <script>
+        $(function() {
+            console.log("hello");
+        });
+    </script>
+@stop

@@ -4,7 +4,7 @@
     <h1 class="h3 mb-2 text-gray-800">ค้นหาข้อมูลพนักงาน</h1>
     <table class="table">
         <tr>
-            <th>รหัส</th>
+            <th>รูป</th>
             <th>ชื่อ</th>
             <th>ภาษา</th>
             <th>เบอร์โทร</th>
@@ -13,7 +13,7 @@
 
         @foreach ($user as $item)
             <tr>
-                <td>{{ $item->id }}</td>
+                <td> <img src="{{ $item->pic }}" alt="mdo" width="32" height="32" class="rounded-circle"></td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->lang }}</td>
                 @if ($item->private == 1)
@@ -51,7 +51,7 @@
 @section('scripts')
     <script>
         $(function() {
-
+            console.log("hello world")
         });
     </script>
 @stop

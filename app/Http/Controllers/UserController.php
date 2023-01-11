@@ -43,11 +43,10 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $path = $request->file('pic');
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
+        $file = $request->file('pic');
+        $type = $file->getClientOriginalExtension();
+        $data = file_get_contents($file);
         $base64 = 'data:image/' .$type . ';base64,' . base64_encode($data);
-
 
         $request->validate(
             [
@@ -60,31 +59,33 @@ class UserController extends Controller
             ]
         );
 
-
-        $private = $request->private;
-        if ($private == 'on') {
-            $private = 1;
-        } else {
-            $private = 0;
-        }
         User::create([
             'name' => $request->name,
             'tel' => $request->tel,
             'pic' => $base64,
             'lang_id' => $request->lang_id,
-            'private' => $private,
+            'private' => $request->private,
             'username' => $request->username,
             'password' => $request->password
         ]);
         return redirect('home');
     }
 
+
     public function update(Request $request, $id)
     {
         $requestData = $request->all();
-        $user = User::findOrFail($id);
-        $user->update($requestData);
-        return redirect('home');
+
+        if( !isset($requestData['pic'])){
+            $requestData['pic'] =  $requestData['oldpic'];
+        }
+        dd(
+            $requestData
+        );
+
+        // $user = User::findOrFail($id);
+        // $user->update($requestData);
+        // return redirect('home');
     }
     public function me($id)
     {
